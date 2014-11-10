@@ -95,11 +95,14 @@ module Mustermann
     end
   end
 
+  # @return [LoadError, nil]
   # @!visibility private
   def self.try_require(path)
     require(path)
+    nil
   rescue LoadError => error
     raise(error) unless error.path == path
+    error
   end
 
   # @!visibility private
