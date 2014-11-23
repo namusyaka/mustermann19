@@ -4,24 +4,23 @@ module Mustermann
     # @!visibility private
     class Node
       # @!visibility private
-      attr_accessor :payload
+      attr_accessor :payload, :start, :stop
 
       # @!visibility private
       # @param [Symbol] name of the node
       # @return [Class] factory for the node
       def self.[](name)
-        @names ||= {}
-        #@names.fetch(name) { Object.const_get(constant_name(name)) }
-        @names.fetch(name) do
+        @names       ||= {}
+        @names[name] ||= begin
           const_name = constant_name(name)
-          const_name.split("::").inject(Object){|current, const| current.const_get(const) }
+          const_name.split("::").inject(Object){|current, const| current.const_get(const) } rescue nil
         end
       end
 
+      # Turns a class name into a node identifier.
       # @!visibility private
-      def is_a?(type)
-        type = Node[type] if type.is_a? Symbol
-        super(type)
+      def self.type
+        name[/[^:]+$/].split(/(?<=.)(?=[A-Z])/).map(&:downcase).join(?_).to_sym
       end
 
       # @!visibility private
@@ -47,6 +46,12 @@ module Mustermann
         self.payload = payload
       end
 
+      # @!visibility private
+      def is_a?(type)
+        type = Node[type] if type.is_a? Symbol
+        super(type)
+      end
+
       # Double dispatch helper for reading from the buffer into the payload.
       # @!visibility private
       def parse
@@ -67,6 +72,24 @@ module Mustermann
           called = true
         end
         yield(self) unless called
+      end
+
+      # @return [Integer] length of the substring
+      # @!visibility private
+      def length
+        stop - start if start and stop
+      end
+
+      # @return [Integer] minimum size for a node
+      # @!visibility private
+      def min_size
+        0
+      end
+
+      # Turns a class name into a node identifier.
+      # @!visibility private
+      def type
+        self.class.type
       end
 
       # @!visibility private
@@ -96,6 +119,11 @@ module Mustermann
 
       # @!visibility private
       class Char < Node
+        # @return [Integer] minimum size for a node
+        # @!visibility private
+        def min_size
+          1
+        end
       end
 
       # AST node for template expressions.
@@ -145,6 +173,11 @@ module Mustermann
 
       # @!visibility private
       class Separator < Node
+        # @return [Integer] minimum size for a node
+        # @!visibility private
+        def min_size
+          1
+        end
       end
 
       # @!visibility private
