@@ -8,6 +8,12 @@
 
 
 *Make sure you view the correct docs: [latest release](http://rubydoc.info/gems/mustermann/frames), [master](http://rubydoc.info/github/rkh/mustermann/master/frames).*
+* **[mustermann](mustermann/README.md): Your personal string matching expert. This is probably what you're looking for.**
+* [mustermann-everything](mustermann-everything/README.md): A meta gem depending on all other official mustermann gems.
+* [mustermann-fileutils](mustermann-fileutils/README.md): Efficient file system operations using Mustermann patterns.
+* [mustermann-strscan](mustermann-strscan/README.md): A version of Ruby's [StringScanner](http://ruby-doc.org/stdlib-2.0/libdoc/strscan/rdoc/StringScanner.html) made for pattern objects.
+* [mustermann-visualizer](mustermann-visualizer/README.md): Syntax highlighting and tree visualization for patterns.
+* A selection of pattern types for mustermann, each as their own little library, see [below](#-pattern-types).
 
 Welcome to [Mustermann](http://en.wikipedia.org/wiki/List_of_placeholder_names_by_language#German). Mustermann is your personal string matching expert. As an expert in the field of strings and patterns, Mustermann keeps its runtime dependencies to a minimum and is fully covered with specs and documentation.
 

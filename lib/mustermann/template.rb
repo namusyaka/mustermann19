@@ -10,6 +10,8 @@ module Mustermann
   # @see file:README.md#template Syntax description in the README
   # @see http://tools.ietf.org/html/rfc6570 RFC 6570
   class Template < AST::Pattern
+    register :template, :uri_template
+
     on ?{ do |char|
       variable = proc do
         start  = pos

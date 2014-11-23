@@ -9,6 +9,8 @@ module Mustermann
   # @see Mustermann::Pattern
   # @see file:README.md#pryamid Syntax description in the README
   class Pyramid < AST::Pattern
+    register :pyramid
+
     on(nil, ?}) { |c| unexpected(c) }
 
     on(?{) do |char|

@@ -10,6 +10,8 @@ module Mustermann
   # @see Mustermann::Pattern
   # @see file:README.md#shell Syntax description in the README
   class Shell < Pattern
+    register :shell
+
     # @param (see Mustermann::Pattern#initialize)
     # @return (see Mustermann::Pattern#initialize)
     # @see (see Mustermann::Pattern#initialize)

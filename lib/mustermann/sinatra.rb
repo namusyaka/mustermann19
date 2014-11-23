@@ -9,6 +9,8 @@ module Mustermann
   # @see Mustermann::Pattern
   # @see file:README.md#sinatra Syntax description in the README
   class Sinatra < AST::Pattern
+    register :sinatra
+
     on(nil, ??, ?), ?|) { |c| unexpected(c) }
 
     on(?*)  { |c| scan(/\w+/) ? node(:named_splat, buffer.matched) : node(:splat) }

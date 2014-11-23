@@ -9,6 +9,7 @@ module Mustermann
   # @see Mustermann::Pattern
   # @see file:README.md#simple Syntax description in the README
   class Simple < RegexpBased
+    register :simple
     supported_options :greedy, :space_matches_plus
 
     def compile(options = {})

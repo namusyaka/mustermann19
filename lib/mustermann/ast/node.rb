@@ -209,7 +209,8 @@ module Mustermann
         attr_accessor :head, :at_end
 
         # @!visibility private
-        def initialize(payload, at_end)
+        def initialize(payload, at_end, options = {})
+          super(options)
           self.head, *self.payload = Array(payload)
           self.at_end = at_end
         end

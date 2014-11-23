@@ -1,5 +1,6 @@
 require 'mustermann/pattern'
 require 'mustermann/composite'
+require 'thread'
 
 # Namespace and main entry point for the Mustermann library.
 #
@@ -73,6 +74,9 @@ module Mustermann
     end
   end
 
+  @mutex ||= Mutex.new
+  @types ||= {}
+
   # Maps a type to its factory.
   #
   # @example
@@ -81,10 +85,21 @@ module Mustermann
   # @param [Symbol] key a pattern type identifier
   # @raise [ArgumentError] if the type is not supported
   # @return [Class, #new] pattern factory
-  def self.[](key)
-    constant, library = register.fetch(key) { raise ArgumentError, "unsupported type %p" % key }
-    require library if library
-    constant.respond_to?(:new) ? constant : register[key] = const_get(constant)
+  def self.[](name)
+    return name if name.respond_to? :new
+    @types.fetch(normalized = normalized_type(name)) do
+      @mutex.synchronize do
+        error = try_require "mustermann/#{normalized}"
+        @types.fetch(normalized) { raise ArgumentError, "unsupported type %p#{" (#{error.message})" if error}" % name }
+      end
+    end
+  end
+
+  # @!visibility private
+  def self.try_require(path)
+    require(path)
+  rescue LoadError => error
+    raise(error) unless error.path == path
   end
 
   # @!visibility private
@@ -97,18 +112,19 @@ module Mustermann
     @register
   end
 
+  def self.register(name, type)
+    @types[normalized_type(name)] = type
+  end
+
+  # @!visibility private
+  def self.normalized_type(type)
+    type.to_s.gsub('-', '_').downcase
+  end
+
   # @!visibility private
   def self.extend_object(object)
     return super unless defined? ::Sinatra::Base and object.is_a? Class and object < ::Sinatra::Base
     require 'mustermann/extension'
     object.register Extension
   end
-
-  register :identity
-  register :rails
-  register :regular, :regexp
-  register :shell
-  register :simple
-  register :sinatra
-  register :template
 end

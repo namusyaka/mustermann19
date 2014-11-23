@@ -9,6 +9,8 @@ module Mustermann
   # @see Mustermann::Pattern
   # @see file:README.md#flask Syntax description in the README
   class Express < AST::Pattern
+    register :express
+
     on(nil, ??, ?+, ?*, ?)) { |c| unexpected(c) }
     on(?:) { |c| node(:capture) { scan(/\w+/) } }
     on(?() { |c| node(:splat, constraint: read_brackets(?(, ?))) }
