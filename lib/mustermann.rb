@@ -101,7 +101,7 @@ module Mustermann
     require(path)
     nil
   rescue LoadError => error
-    raise(error) unless error.path == path
+    raise(error) if error.respond_to?(:path) && error.path != path
     error
   end
 
