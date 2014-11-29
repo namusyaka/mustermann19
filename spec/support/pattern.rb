@@ -31,7 +31,7 @@ module Support
     end
 
     def subject_for(pattern, *args)
-      instance = Timeout.timeout(1) { described_class.new(pattern, *args) }
+      instance = Timeout.timeout(defined?(JRUBY_VERSION) ? 3 : 1) { described_class.new(pattern, *args) }
       proc { instance }
     rescue Timeout::Error => error
       proc { raise Timeout::Error, "could not compile #{pattern.inspect} in time", error.backtrace }
