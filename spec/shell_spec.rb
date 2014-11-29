@@ -59,8 +59,10 @@ describe Mustermann::Shell do
     it { should_not match('/foo/')    }
   end
 
-  pattern '/föö' do
-    it { should match("/f%C3%B6%C3%B6") }
+  unless defined?(JRUBY_VERSION)
+    pattern '/föö' do
+      it { should match("/f%C3%B6%C3%B6") }
+    end
   end
 
   pattern '/test$/' do
