@@ -1007,6 +1007,17 @@ This comes with a few trade-offs:
 [`uri_decode`](#-available-options--uri_decode),
 [`ignore_unknown_options`](#-available-options--ignore_unknown_options).
 
+<a name="-pattern-details-grape"></a>
+### `grape`
+
+**Supported options:**
+[`capture`](#-available-options--capture),
+[`except`](#-available-options--except),
+[`greedy`](#-available-options--greedy),
+[`space_matches_plus`](#-available-options--space_matches_plus),
+[`uri_decode`](#-available-options--uri_decode),
+[`ignore_unknown_options`](#-available-options--ignore_unknown_options).
+
 <a name="-pattern-details-rails"></a>
 ### `rails`
 
