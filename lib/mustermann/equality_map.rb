@@ -5,7 +5,8 @@ module Mustermann
   # @see #fetch
   # @!visibility private
   class EqualityMap
-    MAP_CLASS = defined?(ObjectSpace::WeakMap) ? ObjectSpace::WeakMap : Hash
+    major, minor, _ = RUBY_VERSION.split(?.).map(&:to_i)
+    MAP_CLASS       = major > 1 && minor >= 1 && defined?(ObjectSpace::WeakMap) ? ObjectSpace::WeakMap : Hash
 
     # @!visibility private
     def initialize
