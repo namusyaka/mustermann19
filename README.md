@@ -1,6 +1,6 @@
 # The Amazing Mustermann
 
-[![Build Status](https://travis-ci.org/sinatra/mustermann.svg?branch=master)](https://travis-ci.org/sinatra/mustermann) [![Coverage Status](https://coveralls.io/repos/github/rkh/mustermann/badge.svg?branch=master)](https://coveralls.io/github/rkh/mustermann?branch=master) [![Code Climate](https://img.shields.io/codeclimate/github/rkh/mustermann.svg)](https://codeclimate.com/github/rkh/mustermann) [![Dependency Status](https://gemnasium.com/rkh/mustermann.svg)](https://gemnasium.com/rkh/mustermann) [![Gem Version](https://img.shields.io/gem/v/mustermann.svg)](https://rubygems.org/gems/mustermann)
+[![Build Status](https://travis-ci.org/sinatra/mustermann.svg?branch=master)](https://travis-ci.org/sinatra/mustermann) [![Coverage Status](https://coveralls.io/repos/github/rkh/mustermann/badge.svg?branch=master)](https://coveralls.io/github/rkh/mustermann?branch=master) [![Code Climate](https://img.shields.io/codeclimate/github/rkh/mustermann.svg)](https://codeclimate.com/github/rkh/mustermann) [![Gem Version](https://img.shields.io/gem/v/mustermann.svg)](https://rubygems.org/gems/mustermann)
 [![Inline docs](http://inch-ci.org/github/rkh/mustermann.svg)](http://inch-ci.org/github/rkh/mustermann)
 [![Documentation](http://img.shields.io/:yard-docs-38c800.svg)](http://www.rubydoc.info/gems/mustermann/frames)
 [![License](http://img.shields.io/:license-MIT-38c800.svg)](http://rkh.mit-license.org)
@@ -90,7 +90,7 @@ The `identity`, `regexp` and `sinatra` types are included in the `mustermann` ge
         <a href="https://github.com/rails/journey">Journey</a>,
         <a href="https://github.com/joshbuddy/http_router">HTTP Router</a>,
         <a href="http://hanamirb.org">Hanami</a>,
-        <a href="http://www.scalatra.org/">Scalatra</a> (if <a href="http://www.scalatra.org/2.3/guides/http/routes.html#toc_248">configured</a>),
+        <a href="http://scalatra.org/">Scalatra</a> (if <a href="http://scalatra.org/2.3/guides/http/routes.html#toc_248">configured</a>),
         <a href="https://github.com/alisnic/nyny">NYNY</a></td>
       <td></td>
     </tr>
@@ -98,7 +98,7 @@ The `identity`, `regexp` and `sinatra` types are included in the `mustermann` ge
       <th><a href="mustermann/README.md#-regexp-pattern"><tt>regexp</tt></a></th>
       <td><tt>/(?&lt;slug&gt;[^\/]+)</tt></td>
       <td>
-        <a href="http://www.geocities.jp/kosako3/oniguruma/">Oniguruma</a>,
+        <a href="https://github.com/kkos/oniguruma">Oniguruma</a>,
         <a href="https://github.com/k-takata/Onigmo">Onigmo<a>,
         regular expressions
       </td>
@@ -118,7 +118,7 @@ The `identity`, `regexp` and `sinatra` types are included in the `mustermann` ge
       <td><tt>/:slug.:ext</tt></td>
       <td>
         <a href="http://www.sinatrarb.com/">Sinatra</a> (1.x),
-        <a href="http://www.scalatra.org/">Scalatra</a>,
+        <a href="http://scalatra.org/">Scalatra</a>,
         <a href="http://perldancer.org/">Dancer</a>,
         <a href="http://twitter.github.io/finatra/">Finatra</a>,
         <a href="http://sparkjava.com/">Spark</a>,
@@ -164,13 +164,9 @@ Any software using Mustermann is obviously compatible with at least one of the a
 
 ## Requirements
 
-Mustermann depends on [tool](https://github.com/rkh/tool) (which has been extracted from Mustermann and Sinatra 2.0), and a Ruby 2.2 compatible Ruby implementation.
+Mustermann depends on [tool](https://github.com/rkh/tool) (which has been extracted from Mustermann and Sinatra 2.0), and a Ruby 2.2+ compatible Ruby implementation.
 
-It is known to work on MRI 2.2.
-
-JRuby will hopefully be supported with the release of **JRuby 9000**.
-
-**Rubinius** is not currently supported. As of Rubinius 2.3.1, a large portion of the specs pass (3870 out of 3943), but certain parts are not working yet.
+It is known to work on MRI 2.2 through 2.7. JRuby and Rubinius support is unknown.
 
 If you need Ruby 1.9 support, you might be able to use the **unofficial** [mustermann19](https://rubygems.org/gems/mustermann19) gem based on [namusyaka's fork](https://github.com/namusyaka/mustermann19).
 
@@ -179,6 +175,15 @@ If you need Ruby 1.9 support, you might be able to use the **unofficial** [muste
 Mustermann follows [Semantic Versioning 2.0](http://semver.org/). Anything documented in the README or via YARD and not declared private is part of the public API.
 
 ### Stable Releases
+
+* **Mustermann 1.1.1** (2020-01-04)
+    * Make sure that `require`ing ruby2_keywords when needed. Fixes [#102](https://github.com/sinatra/mustermann/issues/103) [@Annih](https://github.com/Annih)
+
+* **Mustermann 1.1.0** (2019-12-30)
+    * Proper handling of `Mustermann::ExpandError`. Fixes [#88](https://github.com/sinatra/mustermann/issues/88) [@namusyaka](https://github.com/namusyaka)
+    * Support Ruby 3 keyword arguments. [@mame](https://github.com/mame)
+      * At the same time, we dropped a support that accepts options followed by mappings on `Mustermann::Mapper`. [Reference commit](https://github.com/sinatra/mustermann/pull/97/commits/4e134f5b46d8e5886b0f1590f5ff3f6ea4d2e81a)
+    * Improve documentation and development. [@horaciob](https://github.com/horaciob), [@epistrephein](https://github.com/epistrephein), [@jbampton](https://github.com/jbampton), [@jkowens](https://github.com/jkowens), [@junaruga](https://github.com/junaruga)
 
 * **Mustermann 1.0.3** (2018-08-17)
     * Handle `with_look_ahead` on SafeRenderer. Fixes [sinatra/sinatra#1409](https://github.com/sinatra/sinatra/issues/1409) [@namusyaka](https://github.com/namusyaka)

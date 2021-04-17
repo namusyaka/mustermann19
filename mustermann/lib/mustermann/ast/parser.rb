@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'mustermann/ast/node'
 require 'forwardable'
+require 'ruby2_keywords'
 require 'strscan'
 
 module Mustermann
@@ -64,7 +65,7 @@ module Mustermann
       # @param [Symbol] type node type
       # @return [Mustermann::AST::Node]
       # @!visibility private
-      def node(type, *args, &block)
+      ruby2_keywords def node(type, *args, &block)
         type  = Node[type] unless type.respond_to? :new
         start = pos
         node  = block ? type.parse(*args, &block) : type.new(*args)
@@ -153,7 +154,7 @@ module Mustermann
       def read_brackets(open, close, char: nil, escape: ?\\, quote: false, **options)
         result = String.new
         escape = false if escape.nil?
-        while current = getch
+        while (current = getch)
           case current
           when close  then return result
           when open   then result << open   << read_brackets(open, close) << close
